@@ -1,0 +1,10 @@
+---
+- name: Copy service configuration
+  copy:
+    src: "project-service.yaml"
+    dest: $HOME
+
+- name: Create service configuration
+  command: "./bin/kubectl apply -f project-service.yaml"
+  args:
+    chdir: $HOME
