@@ -228,26 +228,23 @@ workflows:
   default:
     jobs:
       - build-app
-          filters:
-              branches:
-                ignore: /.*/
-      - upload-dockerhub:
-          requires:
-            - build-app
-          filters:
-            branches:
-              only: [ main ]
-      - deploy-infrastructure:
-          filters:
-            branches:
-              only: [ main ]
-      - configure-infrastructure:
-          requires:
-            - deploy-infrastructure
-      - configure-cluster:
-          requires:
-            - upload-dockerhub
-            - configure-infrastructure
-      - deploy-docker:
-          requires:
-            - configure-cluster
+      # - upload-dockerhub:
+      #     requires:
+      #       - build-app
+      #     filters:
+      #       branches:
+      #         only: [ main ]
+      # - deploy-infrastructure:
+      #     filters:
+      #       branches:
+      #         only: [ main ]
+      # - configure-infrastructure:
+      #     requires:
+      #       - deploy-infrastructure
+      # - configure-cluster:
+      #     requires:
+      #       - upload-dockerhub
+      #       - configure-infrastructure
+      # - deploy-docker:
+      #     requires:
+      #       - configure-cluster
