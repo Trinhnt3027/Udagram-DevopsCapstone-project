@@ -73,58 +73,58 @@ jobs:
           name: Ensure EKS network exists
           command: |
             aws cloudformation deploy \
-              --template-file cloudformation/network.yml \
+              --template-file .circleci/cloudformation/networks.yml \
               --tags project=${ENVIRONMENT_NAME}-project \
               --stack-name "${ENVIRONMENT_NAME}-eks-network" \
               --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://cloudformation/network-parameters.json
-      - run:
-          name: Ensure EKS Cluster exists
-          command: |
-            aws cloudformation deploy \
-              --template-file cloudformation/cluster.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \
-              --stack-name "${ENVIRONMENT_NAME}-eks-cluster" \
-              --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://cloudformation/cluster-parameters.json \
-              --capabilities CAPABILITY_NAMED_IAM
-          no_output_timeout: 15m
-      - run:
-          name: Ensure Nodegroup exists
-          command: |
-            aws cloudformation deploy \
-              --template-file cloudformation/nodegroup.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \
-              --stack-name "${ENVIRONMENT_NAME}-eks-nodegroup" \
-              --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://cloudformation/nodegroup-parameters.json \
-              --capabilities CAPABILITY_NAMED_IAM
-      - run:
-          name: Ensure management instances exists
-          command: |
-            aws cloudformation deploy \
-              --template-file cloudformation/management.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \
-              --stack-name "${ENVIRONMENT_NAME}-eks-management" \
-              --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://cloudformation/management-parameters.json \
-              --output text >> ~/checkIfDeployed.txt
-            cat ~/checkIfDeployed.txt
-      - run:
-          name: Extract the IPs of the management instances for Ansible
-          command: |
-            echo [management] > ~/inventory.txt
-            aws ec2 describe-instances \
-              --region "${AWS_DEFAULT_REGION}" \
-              --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Name,Values=${ENVIRONMENT_NAME}-management*" \
-              --output text >> ~/inventory.txt
-            cat ~/inventory.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - inventory.txt
-            - checkIfDeployed.txt
+              --parameter-overrides file://.circleci/cloudformation/networks-parameters.json
+      # - run:
+      #     name: Ensure EKS Cluster exists
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/cloudformation/cluster.yml \
+      #         --tags project=${ENVIRONMENT_NAME}-project \
+      #         --stack-name "${ENVIRONMENT_NAME}-eks-cluster" \
+      #         --region ${AWS_DEFAULT_REGION} \
+      #         --parameter-overrides file://.circleci/cloudformation/cluster-parameters.json \
+      #         --capabilities CAPABILITY_NAMED_IAM
+      #     no_output_timeout: 15m
+      # - run:
+      #     name: Ensure Nodegroup exists
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/cloudformation/nodegroup.yml \
+      #         --tags project=${ENVIRONMENT_NAME}-project \
+      #         --stack-name "${ENVIRONMENT_NAME}-eks-nodegroup" \
+      #         --region ${AWS_DEFAULT_REGION} \
+      #         --parameter-overrides file://.circleci/cloudformation/nodegroup-parameters.json \
+      #         --capabilities CAPABILITY_NAMED_IAM
+      # - run:
+      #     name: Ensure management instances exists
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/cloudformation/management.yml \
+      #         --tags project=${ENVIRONMENT_NAME}-project \
+      #         --stack-name "${ENVIRONMENT_NAME}-eks-management" \
+      #         --region ${AWS_DEFAULT_REGION} \
+      #         --parameter-overrides file://.circleci/cloudformation/management-parameters.json \
+      #         --output text >> ~/checkIfDeployed.txt
+      #       cat ~/checkIfDeployed.txt
+      # - run:
+      #     name: Extract the IPs of the management instances for Ansible
+      #     command: |
+      #       echo [web] > ~/inventory.txt
+      #       aws ec2 describe-instances \
+      #         --region "${AWS_DEFAULT_REGION}" \
+      #         --query 'Reservations[*].Instances[*].PublicIpAddress' \
+      #         --filters "Name=tag:Name,Values=${ENVIRONMENT_NAME}-management*" \
+      #         --output text >> ~/inventory.txt
+      #       cat ~/inventory.txt
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - inventory.txt
+      #       - checkIfDeployed.txt
 
   configure-infrastructure:
     docker:
@@ -225,16 +225,16 @@ jobs:
             ansible-playbook -i ~/inventory.txt deploy-app.yml
           no_output_timeout: 2m
 
-workflows:
-  default:
-    jobs:
-      - build-app
-      - upload-dockerhub:
-          requires:
-            - build-app
-          filters:
-            branches:
-              only: [ main ]
+# workflows:
+#   default:
+#     jobs:
+      # - build-app
+      # - upload-dockerhub:
+      #     requires:
+      #       - build-app
+      #     filters:
+      #       branches:
+      #         only: [ main ]
       # - deploy-infrastructure:
       #     filters:
       #       branches:

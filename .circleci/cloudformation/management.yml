@@ -24,7 +24,7 @@ Resources:
           ToPort: 22
           CidrIp: 0.0.0.0/0
 
-  ServerHost1:
+  ServerManagement1:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
@@ -35,7 +35,7 @@ Resources:
         - Key: Name
           Value: !Sub ${EnvironmentName}-host1
 
-  ServerHost2:
+  ServerManagement2:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
