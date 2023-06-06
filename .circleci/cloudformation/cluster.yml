@@ -3,7 +3,7 @@ Description: Udacity Devops capstone project, create EKS cluster
 Parameters:
   EnvironmentName:
     Description: An Environment name that will be prefixed to resources
-    Default: UdacityDevOps-Capstone
+    Default: devops-capstone
     Type: String
 
 Resources:

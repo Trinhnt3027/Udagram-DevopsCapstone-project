@@ -3,7 +3,7 @@ Description: Udacity Devops capstone project, create servers
 Parameters:
   EnvironmentName:
     Description: Environtment name using to be prefix for all resources
-    Default: UdacityDevOps-Capstone
+    Default: devops-capstone
     Type: String
   AMIServerId:
     Description: AMI ID for EC2 instances.

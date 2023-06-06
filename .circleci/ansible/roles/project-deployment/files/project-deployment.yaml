@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: UdacityDevOps-Capstone-deployment
+  name: devops-capstone-deployment
   labels:
-    app: UdacityDevOps-Capstone-app
+    app: devops-capstone-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: UdacityDevOps-Capstone-app
+      app: devops-capstone-app
   template:
     metadata:
       labels:
-        app: UdacityDevOps-Capstone-app
+        app: devops-capstone-app
     spec:
       containers:
-        - name: UdacityDevOps-Capstone-app
-          image: trinhnt30/UdacityDevOps-Capstone
+        - name: devops-capstone-app
+          image: trinhnt30/devops-capstone
           ports:
             - containerPort: 80

@@ -3,7 +3,7 @@ Description: Udacity Devops capstone project, create networks
 Parameters:
   EnvironmentName:
     Description: An environment name that will be prefixed to resource names
-    Default: UdacityDevOps-Capstone
+    Default: devops-capstone
     Type: String
 
   VpcCIDR:
