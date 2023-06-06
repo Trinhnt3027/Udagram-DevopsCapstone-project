@@ -33,7 +33,7 @@ Resources:
       ImageId: !Ref AMIServerId
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-host1
+          Value: !Sub ${EnvironmentName}-management1
 
   ServerManagement2:
     Type: AWS::EC2::Instance
@@ -44,4 +44,4 @@ Resources:
       ImageId: !Ref AMIServerId
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-host2
+          Value: !Sub ${EnvironmentName}-management2
