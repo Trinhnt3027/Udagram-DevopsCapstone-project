@@ -1,7 +1,7 @@
 ---
 
 - name: "Configure the EKS"
-  hosts: management[0]
+  hosts: web
   user: ubuntu
   gather_facts: false
   become: yes
