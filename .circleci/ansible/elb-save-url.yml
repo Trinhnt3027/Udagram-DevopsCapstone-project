@@ -6,7 +6,7 @@
   become: yes
   tasks:
     - name: Get the LoadBalancer's DNS name
-      shell: "./bin/kubectl get svc project-service"
+      shell: "./bin/kubectl get svc devops-capstone-service"
       register: elb_url
       args:
         chdir: $HOME

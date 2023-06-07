@@ -12,10 +12,10 @@
     - ansible_stdout_callback: yaml
 
   pre_tasks:
-    - name: "wait 400 seconds for target connection to become reachable/usable."
-      wait_for_connection:
-        delay: 0
-        timeout: 400
+    # - name: "wait 400 seconds for target connection to become reachable/usable."
+    #   wait_for_connection:
+    #     delay: 0
+    #     timeout: 400
     - name: "Install 'unzip'"
       apt:
         name: [ "unzip" ]
