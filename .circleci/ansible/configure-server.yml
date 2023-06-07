@@ -12,8 +12,6 @@
       wait_for_connection:
         delay: 0
         timeout: 300
-
-  pre_tasks:
     - name: "Install 'unzip'"
       apt:
         name: [ "unzip" ]
