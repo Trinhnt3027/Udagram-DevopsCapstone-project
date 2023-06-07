@@ -141,7 +141,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apt-get update -y
+            apt install ansible -y
+            which ansible
       - run:
           name: Configure server
           command: |
