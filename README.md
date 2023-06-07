@@ -1,3 +1,5 @@
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/Trinhnt3027/Udagram-DevopsCapstone-project/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/Trinhnt3027/Udagram-DevopsCapstone-project/tree/main)
+
 # Udagram-DevopsCapstone-project
 This is capstone of devops udacity for DevOps udacity
 
