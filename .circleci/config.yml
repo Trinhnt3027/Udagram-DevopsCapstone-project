@@ -148,15 +148,15 @@ jobs:
           name: Configure server
           command: |
             cat ~/checkIfDeployed.txt
-            if grep -q "No changes to deploy" ~/checkIfDeployed.txt
-              then
-                cat ~/inventory.txt
-                echo "Our management instances are already configured."
-              else
-                cat ~/inventory.txt
-                cd .circleci/ansible
-                ansible-playbook -i ~/inventory.txt configure-server.yml
-              fi
+            # if grep -q "No changes to deploy" ~/checkIfDeployed.txt
+            #   then
+            #     cat ~/inventory.txt
+            #     echo "Our management instances are already configured."
+            #   else
+            #     cat ~/inventory.txt
+            #     cd .circleci/ansible
+            #     ansible-playbook -i ~/inventory.txt configure-server.yml
+            #   fi
 
   configure-cluster:
     docker:
