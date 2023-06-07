@@ -8,10 +8,8 @@
     - ansible_python_interpreter: /usr/bin/python3
     - ansible_host_key_checking: false
     - ansible_stdout_callback: yaml
-
-  environment:
-    ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
-    CIRCLE_WORKFLOW_ID: "{{ lookup('env', 'CIRCLE_WORKFLOW_ID') }}"
+    - ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
+    - CIRCLE_WORKFLOW_ID: "{{ lookup('env', 'CIRCLE_WORKFLOW_ID') }}"
   tasks:
     - name: Update the deployment to run the latest Build
       shell: "./bin/kubectl set image deployments/project-deployment {{ ENVIRONMENT_NAME }}-app=trinhnt30/{{ ENVIRONMENT_NAME }}:{{ CIRCLE_WORKFLOW_ID }}"

@@ -101,17 +101,17 @@ jobs:
       #         --capabilities CAPABILITY_NAMED_IAM
       - run:
           name: Ensure management instances exists
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/cloudformation/management.yml \
-              --tags project=${ENVIRONMENT_NAME}-project \
-              --stack-name "${ENVIRONMENT_NAME}-eks-management" \
-              --region ${AWS_DEFAULT_REGION} \
-              --parameter-overrides file://.circleci/cloudformation/management-parameters.json \
-              --output text >> ~/checkIfDeployed.txt
-            cat ~/checkIfDeployed.txt
           # command: |
-          #   echo deploy ok > ~/checkIfDeployed.txt
+          #   aws cloudformation deploy \
+          #     --template-file .circleci/cloudformation/management.yml \
+          #     --tags project=${ENVIRONMENT_NAME}-project \
+          #     --stack-name "${ENVIRONMENT_NAME}-eks-management" \
+          #     --region ${AWS_DEFAULT_REGION} \
+          #     --parameter-overrides file://.circleci/cloudformation/management-parameters.json \
+          #     --output text >> ~/checkIfDeployed.txt
+          #   cat ~/checkIfDeployed.txt
+          command: |
+            echo deploy ok > ~/checkIfDeployed.txt
       - run:
           name: Extract the IPs of the management instances for Ansible
           command: |
