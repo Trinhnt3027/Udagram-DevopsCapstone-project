@@ -12,11 +12,11 @@
     - CIRCLE_WORKFLOW_ID: "{{ lookup('env', 'CIRCLE_WORKFLOW_ID') }}"
   tasks:
     - name: Update the deployment to run the latest Build
-      shell: "./bin/kubectl set image deployments/project-deployment {{ ENVIRONMENT_NAME }}-app=trinhnt30/{{ ENVIRONMENT_NAME }}:{{ CIRCLE_WORKFLOW_ID }}"
+      shell: "./bin/kubectl set image deployments/devops-capstone-deployment devops-capstone-app=trinhnt30/{{ ENVIRONMENT_NAME }}:{{ CIRCLE_WORKFLOW_ID }}"
       args:
         chdir: $HOME
 
     - name: Check if deployment ist successful
-      shell: "./bin/kubectl rollout status deployments/project-deployment"
+      shell: "./bin/kubectl rollout status deployments/devops-capstone-deployment"
       args:
         chdir: $HOME
