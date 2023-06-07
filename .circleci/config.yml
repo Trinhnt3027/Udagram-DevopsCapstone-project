@@ -35,7 +35,7 @@ jobs:
           paths:
             - ./venv
           key: v1-dependencies-{{ checksum "requirements.txt" }}
-          
+
 
   upload-dockerhub:
     docker:
@@ -69,7 +69,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dependencies
+          name: Install all dependencies
           command: yum install -y tar gzip
       - run:
           name: Ensure EKS network exists
