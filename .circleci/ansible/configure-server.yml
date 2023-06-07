@@ -4,6 +4,15 @@
   user: ubuntu
   gather_facts: false
   become: yes
+  become_method: sudo
+  become_user: root  
+
+  pre_tasks:
+    - name: "wait 300 seconds for target connection to become reachable/usable."
+      wait_for_connection:
+        delay: 0
+        timeout: 300
+
   pre_tasks:
     - name: "Install 'unzip'"
       apt:

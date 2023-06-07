@@ -5,6 +5,8 @@
   user: ubuntu
   gather_facts: false
   become: yes
+  become_method: sudo
+  become_user: root  
   vars:
     ENVIRONMENT_NAME: "{{ lookup('env', 'ENVIRONMENT_NAME') }}"
   roles:
