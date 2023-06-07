@@ -245,6 +245,8 @@ workflows:
             branches:
               only: [ main ]
       - deploy-infrastructure:
+          requires:
+            - upload-dockerhub
           filters:
             branches:
               only: [ main ]
@@ -253,7 +255,6 @@ workflows:
             - deploy-infrastructure
       - configure-cluster:
           requires:
-            - upload-dockerhub
             - configure-infrastructure
       - deploy-docker:
           requires:
