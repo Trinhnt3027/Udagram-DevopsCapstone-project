@@ -133,7 +133,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "d4:2f:91:66:b5:0d:84:24:4a:09:2c:d6:8a:c1:0f:91"
+            - "9d:75:ae:bb:11:19:1b:6c:b4:5d:f1:e2:9e:a2:d6:8e"
       - attach_workspace:
           at: ~/
       - run:
@@ -160,7 +160,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "d4:2f:91:66:b5:0d:84:24:4a:09:2c:d6:8a:c1:0f:91"
+            - "9d:75:ae:bb:11:19:1b:6c:b4:5d:f1:e2:9e:a2:d6:8e"
       - attach_workspace:
           at: ~/
       - run:
@@ -210,7 +210,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "d4:2f:91:66:b5:0d:84:24:4a:09:2c:d6:8a:c1:0f:91"
+            - "9d:75:ae:bb:11:19:1b:6c:b4:5d:f1:e2:9e:a2:d6:8e"
       - attach_workspace:
           at: ~/
       - run:
@@ -221,31 +221,31 @@ jobs:
           name: Deploy newest Docker Image
           command: |
             cat ~/inventory.txt
-            cd ansible
+            cd .circleci/ansible
             ansible-playbook -i ~/inventory.txt deploy-app.yml
           no_output_timeout: 2m
 
-# workflows:
-#   default:
-#     jobs:
-      # - build-app
-      # - upload-dockerhub:
-      #     requires:
-      #       - build-app
-      #     filters:
-      #       branches:
-      #         only: [ main ]
-      # - deploy-infrastructure:
-      #     filters:
-      #       branches:
-      #         only: [ main ]
-      # - configure-infrastructure:
-      #     requires:
-      #       - deploy-infrastructure
-      # - configure-cluster:
-      #     requires:
-      #       - upload-dockerhub
-      #       - configure-infrastructure
-      # - deploy-docker:
-      #     requires:
-      #       - configure-cluster
+workflows:
+  default:
+    jobs:
+      - build-app
+      - upload-dockerhub:
+          requires:
+            - build-app
+          filters:
+            branches:
+              only: [ main ]
+      - deploy-infrastructure:
+          filters:
+            branches:
+              only: [ main ]
+      - configure-infrastructure:
+          requires:
+            - deploy-infrastructure
+      - configure-cluster:
+          requires:
+            - upload-dockerhub
+            - configure-infrastructure
+      - deploy-docker:
+          requires:
+            - configure-cluster

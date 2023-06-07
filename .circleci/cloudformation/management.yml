@@ -24,24 +24,14 @@ Resources:
           ToPort: 22
           CidrIp: 0.0.0.0/0
 
-  ServerManagement1:
+  ServerManagement:
     Type: AWS::EC2::Instance
     Properties:
       InstanceType: !Ref InstanceType
       SecurityGroups:
         - Ref: InstanceSecurityGroup
       ImageId: !Ref AMIServerId
+      KeyName: devops-capstone
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName}-management1
-
-  ServerManagement2:
-    Type: AWS::EC2::Instance
-    Properties:
-      InstanceType: !Ref InstanceType
-      SecurityGroups:
-        - Ref: InstanceSecurityGroup
-      ImageId: !Ref AMIServerId
-      Tags:
-        - Key: Name
-          Value: !Sub ${EnvironmentName}-management2
+          Value: !Sub ${EnvironmentName}-management

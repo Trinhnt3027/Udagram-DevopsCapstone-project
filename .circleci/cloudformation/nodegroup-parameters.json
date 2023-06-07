@@ -9,10 +9,10 @@
     },
     {
         "ParameterKey": "MaxSize",
-        "ParameterValue": "4"
+        "ParameterValue": "3"
     },
     {
         "ParameterKey": "DesiredSize",
-        "ParameterValue": "3"
+        "ParameterValue": "2"
     }
 ]
