@@ -17,4 +17,8 @@ This capstone project uses Python and Flask framework to create basic web page t
 - EKS cluster + Node group to deploy app
 - Management server to configure and manage for EKS cluster
 
-## Pipeline
+## CircleCI Pipeline
+![CircleCi Pipeline](./screenshoots/img_pipeline.JPG)
+
+## Web URL: http://a462ef7336ac541c394cd46d8f363cf0-464739255.us-east-1.elb.amazonaws.com/
+![CircleCi Pipeline](./screenshoots/img_elb_url.JPG)
