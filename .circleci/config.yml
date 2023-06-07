@@ -101,17 +101,17 @@ jobs:
       #         --capabilities CAPABILITY_NAMED_IAM
       - run:
           name: Ensure management instances exists
-          # command: |
-          #   aws cloudformation deploy \
-          #     --template-file .circleci/cloudformation/management.yml \
-          #     --tags project=${ENVIRONMENT_NAME}-project \
-          #     --stack-name "${ENVIRONMENT_NAME}-eks-management" \
-          #     --region ${AWS_DEFAULT_REGION} \
-          #     --parameter-overrides file://.circleci/cloudformation/management-parameters.json \
-          #     --output text >> ~/checkIfDeployed.txt
-          #   cat ~/checkIfDeployed.txt
           command: |
-            echo deploy ok > ~/checkIfDeployed.txt
+            aws cloudformation deploy \
+              --template-file .circleci/cloudformation/management.yml \
+              --tags project=${ENVIRONMENT_NAME}-project \
+              --stack-name "${ENVIRONMENT_NAME}-eks-management" \
+              --region ${AWS_DEFAULT_REGION} \
+              --parameter-overrides file://.circleci/cloudformation/management-parameters.json \
+              --output text >> ~/checkIfDeployed.txt
+            cat ~/checkIfDeployed.txt
+          # command: |
+          #   echo deploy ok > ~/checkIfDeployed.txt
       - run:
           name: Extract the IPs of the management instances for Ansible
           command: |
@@ -160,7 +160,7 @@ jobs:
 
   configure-cluster:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.9.16
     steps:
       - checkout
       - add_ssh_keys:
@@ -171,7 +171,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apt-get update -y
+            apt install ansible -y
+            which ansible
       - run:
           name: Configure cluster
           command: |
@@ -210,7 +212,7 @@ jobs:
 
   deploy-docker:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.9.16
     steps:
       - checkout
       - add_ssh_keys:
@@ -221,7 +223,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apt-get update -y
+            apt install ansible -y
+            which ansible
       - run:
           name: Deploy newest Docker Image
           command: |
@@ -233,13 +237,13 @@ jobs:
 workflows:
   default:
     jobs:
-      # - build-app
-      # - upload-dockerhub:
-      #     requires:
-      #       - build-app
-      #     filters:
-      #       branches:
-      #         only: [ main ]
+      - build-app
+      - upload-dockerhub:
+          requires:
+            - build-app
+          filters:
+            branches:
+              only: [ main ]
       - deploy-infrastructure:
           filters:
             branches:
@@ -247,10 +251,10 @@ workflows:
       - configure-infrastructure:
           requires:
             - deploy-infrastructure
-      # - configure-cluster:
-      #     requires:
-      #       - upload-dockerhub
-      #       - configure-infrastructure
-      # - deploy-docker:
-      #     requires:
-      #       - configure-cluster
+      - configure-cluster:
+          requires:
+            - upload-dockerhub
+            - configure-infrastructure
+      - deploy-docker:
+          requires:
+            - configure-cluster
