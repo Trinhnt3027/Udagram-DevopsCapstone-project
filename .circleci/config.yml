@@ -203,12 +203,12 @@ jobs:
           command: |
             cat ~/inventory.txt
             cd .circleci/ansible
-            ansible-playbook -i ~/inventory.txt save-elb-dns.yml
-            cat ~/elb_dns.txt
+            ansible-playbook -i ~/inventory.txt elb-save-url.yml
+            cat ~/elb_url.txt
       - persist_to_workspace:
           root: ~/
           paths:
-            - elb_dns.txt
+            - elb_url.txt
 
   deploy-docker:
     docker:
